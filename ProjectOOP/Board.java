@@ -33,6 +33,7 @@ public class Board extends JPanel implements ActionListener{
         board = new Tetrominoes[BoardWidth * BoardHeight];
         addKeyListener(new TAdapter());
         clearBoard();  
+        setBackground(Color.BLACK);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -74,7 +75,8 @@ public class Board extends JPanel implements ActionListener{
         }
         repaint();
     }
-    
+
+    //Spawn shapes
     public void paint(Graphics g){ 
         super.paint(g);
         Dimension size = getSize();
@@ -105,7 +107,8 @@ public class Board extends JPanel implements ActionListener{
         ImageIcon background = new ImageIcon(BackgroundPath);
         g.drawImage(background.getImage(),0,0,this.getWidth(),this.getHeight(),null);
     }
-//Immediately drop pieces to the bottom of the game panel
+
+    //Immediately drop pieces to the bottom of the game panel
     private void dropDown(){
         int newY = curY;
         while (newY > 0) {
@@ -115,17 +118,20 @@ public class Board extends JPanel implements ActionListener{
         }
         pieceDropped();
     }
+
     //Move pieces down by 1 line
     private void oneLineDown(){
         if (!tryMove(curPiece, curX, curY - 1))
             pieceDropped();
     }
+
     //Initiate board
     private void clearBoard()
     {
         for (int i = 0; i < BoardHeight * BoardWidth; ++i)
             board[i] = Tetrominoes.NoShape;
     }
+
     //Processing pieces dropped
     private void pieceDropped()
     {
@@ -138,6 +144,7 @@ public class Board extends JPanel implements ActionListener{
         if (!FallingFinished)
             newPiece(); 
     }
+
     //Create new pieces
     private void newPiece(){
         curPiece.setRandomShape();
@@ -150,6 +157,7 @@ public class Board extends JPanel implements ActionListener{
             GameOver();
         }
     }
+
     //Display Game Over screen
     public void GameOver(){
         Tetris.PlayGameOver();
@@ -171,8 +179,7 @@ public class Board extends JPanel implements ActionListener{
         else if(confirmed == JOptionPane.NO_OPTION){System.exit(1);}
     }
 
-
-//Pieces' movement
+    //Pieces' movement
     private boolean tryMove(Shape newPiece, int newX, int newY){
         for (int i = 0; i < 4; ++i) {
             int x = newX + newPiece.x(i);
@@ -188,6 +195,7 @@ public class Board extends JPanel implements ActionListener{
         repaint();
         return true;
     }
+
     //Method to clear a line when all the pieces are puzzled together
     private void removeFullLines(){
         int numFullLines = 0;
@@ -215,7 +223,8 @@ public class Board extends JPanel implements ActionListener{
             curPiece.setShape(Tetrominoes.NoShape);
             repaint();
         }
-     }
+    }
+    
     //Pieces'configuration
     private void drawSquare(Graphics g, int x, int y, Tetrominoes shape){
         Color colors[] = {
@@ -236,6 +245,7 @@ public class Board extends JPanel implements ActionListener{
         g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
                          x + squareWidth() - 1, y + 1);
     }
+
     //Controller
     class TAdapter extends KeyAdapter {
          public void keyPressed(KeyEvent e){ 
@@ -272,7 +282,6 @@ public class Board extends JPanel implements ActionListener{
                  oneLineDown();
                  break;
              }
-
          }
      }
 }

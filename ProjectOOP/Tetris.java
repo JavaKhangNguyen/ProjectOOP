@@ -11,10 +11,12 @@ public class Tetris extends JFrame{
 	//Setup the game GUI
     public Tetris() {
         statusbar = new JLabel("Score: 0");
-		statusbar.setForeground(Color.BLUE);
-		statusbar.setFont(new Font("Calibri",Font.PLAIN,40));
-        add(statusbar, BorderLayout.NORTH);
-        Board board = new Board(this);
+		statusbar.setOpaque(true);//Enable background change for the score bar
+		statusbar.setBackground(Color.BLACK);//Set background color for the score bar
+		statusbar.setForeground(Color.red);//Set font color for the score bar
+		statusbar.setFont(new Font("Calibri",Font.PLAIN,40));//Set font for the score bar
+        add(statusbar, BorderLayout.NORTH);//Add score bar to desired position on the game interface
+        Board board = new Board(this);//Create game interface
         JOptionPane.showMessageDialog(board,
         		"Welcome to Java Tetris! \n "
         		+ "Instructions for the game:\n"
@@ -28,17 +30,17 @@ public class Tetris extends JFrame{
         		+ " 2. Right: DOWN\n"
         		+ " Drop down : SPACE\n"
         		+ " Pause: Key P","Java Tetris",JOptionPane.INFORMATION_MESSAGE);
-        add(board);
-        board.start();
+        add(board);//Add board to container for display
+        board.start();//Start the game
         setTitle("Tetris");
 		setSize(500,700);
         addWindowListener(new WindowAdapter() {
         	  @Override
         	  public void windowClosing(WindowEvent e) {
         	    int confirmed = JOptionPane.showConfirmDialog(null, 
-				"Are you sure you want to exit the game?", "Teris",JOptionPane.OK_CANCEL_OPTION);
+				"Are you sure you want to exit the game?", "Tetris",JOptionPane.OK_CANCEL_OPTION);
         	    if (confirmed == JOptionPane.CANCEL_OPTION) {
-        	      confirmed = DO_NOTHING_ON_CLOSE;
+					setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);//Return to the game interface
         	    }
 				else System.exit(1);
         	  }
